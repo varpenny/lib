@@ -78,6 +78,9 @@
             var f = scriptElm.readyState;
             if (f && f != 'loaded' && f != 'complete') return;
 
+            scriptElm.onload = scriptElm.onreadystatechange = null;
+            headElm.removeChild(scriptElm);
+            
             // 如果只传入回调函数 fn，不传入 fnName 且 url 中不指定 callback 参数，则执行回调函数
             if ('function' == typeof fn && !cb) fn();
 
@@ -90,9 +93,6 @@
                     window[fnName] = undefined;
                 }
             }
-
-            scriptElm.onload = scriptElm.onreadystatechange = null;
-            headElm.removeChild(scriptElm);
         };
     };
 
